@@ -15,14 +15,11 @@ public class Main {
             int[] initialLocationCoordinates = {0, 40};
             int[] targetLocationCoordinates = {400, 820};
             Agent agent = new Agent(initialLocationCoordinates, targetLocationCoordinates, image, Agent.Strategies.BFS);
-            ArrayList<Node> solution = agent.findPath(agent.perceptEnvironment());
+            ArrayList<Node> solution = agent.findPath(agent.perceptsEnvironment());
 
+            for (Node node : solution) {
+                image.setRGB(node.getState()[1], node.getState()[0], red.getRGB());
 
-            Node parent = solution.get(solution.size() - 1);
-
-            while (parent.getParent() != null) {
-                parent = parent.getParent();
-                image.setRGB(parent.getState()[1], parent.getState()[0], red.getRGB());
             }
 
             File file = new File("image.png");
