@@ -1,6 +1,6 @@
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-
+import java.util.ArrayList;
 
 
 public class Agent {
@@ -43,11 +43,11 @@ public class Agent {
 
 	}
 	
-	public void findPath(boolean[][] matrix) {
+	public ArrayList<int[]> findPath(boolean[][] matrix) {
 		int Height = this.environment.getHeight();
 		int Width = this.environment.getWidth();
 		Maze maze = new Maze(this.initialLocationCoordinates, this.targetLocationCoordinates,matrix,Height,Width);
-		searchUnit.breadthFirstSearch(maze);
+		return searchUnit.breadthFirstSearch(maze);
 	}
 	
 	

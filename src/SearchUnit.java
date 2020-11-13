@@ -53,32 +53,32 @@ public class SearchUnit {
 
 			int counter = 1;
 			for (Maze.Actions action : Maze.Actions.values()) {
-				System.out.println("\n------------" + "{counter " + counter + " } "
-						+ "----------------------------------" + (counter == 1 ? "=======<>\n" : "\n"));
-				System.out.println(node.getState()[0] + " <--> current state <--> "+ node.getState()[1]);
-				int[] nodeCordinates = {node.getState()[0],node.getState()[1]};
-				int[] state = problem.result(nodeCordinates, action, problem.matrix);
+//				System.out.println(node.getState()[0] + " <--> current state <--> "+ node.getState()[1]);
+//				System.out.println("\n------------" + "{counter " + counter + " } "
+//						+ "----------------------------------" + (counter == 1 ? "=======<>\n" : "\n"));
+				int[] nodeCoordinates = {node.getState()[0],node.getState()[1]};
+				int[] state = problem.result(nodeCoordinates, action, problem.matrix);
+				solution.add(state);
 
 				counter++;
 
 		
 
 				if (!explored[state[0]][state[1]]) {
-
 					explored[state[0]][state[1]] = true;
 					//System.out.println("< added to explored > " + state[0] + " " + state[1]);
 
 					if (problem.goalTest(state)) {
-						solution.add(state);
-						System.out.println("found: "+state[0]+" <> "+state[1]);
+
+						//System.out.println("found: "+state[0]+" <> "+state[1]);
 						return solution;
 					} else {
-						System.out.println("< added to frontier > " + state[0] + " " + state[1]);
-						
+//						System.out.println("< added to frontier > " + state[0] + " " + state[1]);
+
 						frontier.add(new Node(state, 0));
 					}
-				}  else
-					System.out.println("skip " + state[0] + " " + state[1]);
+				}  //else
+					//System.out.println("skip " + state[0] + " " + state[1]);
 
 			}
 
