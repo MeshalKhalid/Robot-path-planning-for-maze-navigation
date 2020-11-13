@@ -8,27 +8,27 @@ public class Agent {
 	private int[] initialLocationCoordinates; // The initial state that the agent starts in
 	private int[] targetLocationCoordinates; // goal
 	private BufferedImage environment;
-	private Strategies stratigy;
+	private Strategies strategy;
 
 	static public enum Strategies {
 		BFS, DFS, GreedySearch, AStar
 	}
 
-	public Agent(int[] initialLocationCoordinates, int[] targetLocationCoordinates, BufferedImage environment,Strategies stratigy) {
+	public Agent(int[] initialLocationCoordinates, int[] targetLocationCoordinates, BufferedImage environment, Strategies strategy) {
 		super();
 		this.initialLocationCoordinates = initialLocationCoordinates;
 		this.targetLocationCoordinates = targetLocationCoordinates;
 		this.environment = environment;
-		this.stratigy = stratigy;
+		this.strategy = strategy;
 		this.searchUnit = new SearchUnit();
-		
+
 	}
 
-	public boolean[][] perceptEnvironment() {
+	public boolean[][] perceptsEnvironment() {
 		System.out.println("analyzing the maze...\n\n\n");
 		int Height = this.environment.getHeight();
 		int Width = this.environment.getWidth();
-		printDetails(Height,Width);
+		printDetails(Height, Width);
 
 		boolean[][] matrix = new boolean[Height][Width];
 		for (int i = 0; i < Height; i++) {
@@ -47,7 +47,7 @@ public class Agent {
 		int Height = this.environment.getHeight();
 		int Width = this.environment.getWidth();
 		Maze maze = new Maze(this.initialLocationCoordinates, this.targetLocationCoordinates, matrix, Height, Width);
-		return searchUnit.breadthFirstSearch(maze);
+		return searchUnit.getFinalPath(searchUnit.breadthFirstSearch(maze), this.strategy);
 	}
 
 
@@ -87,12 +87,12 @@ public class Agent {
 		this.environment = environment;
 	}
 
-	public Strategies getStratigy() {
-		return stratigy;
+	public Strategies getStrategy() {
+		return strategy;
 	}
 
-	public void setStratigy(Strategies stratigy) {
-		this.stratigy = stratigy;
+	public void setStrategy(Strategies strategy) {
+		this.strategy = this.strategy;
 	}
 
 }
