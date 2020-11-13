@@ -95,4 +95,30 @@ public class SearchUnit {
 
     }
 
+
+    public ArrayList<Node> getFinalPath(ArrayList<Node> path, Agent.Strategies strategy) {
+        ArrayList<Node> finalPath = new ArrayList<>();
+
+        switch (strategy) {
+            case BFS:
+                Node parent = path.get(path.size() - 1);
+
+                while (parent.getParent() != null) {
+                    parent = parent.getParent();
+                    finalPath.add(parent);
+                }
+                break;
+
+            //        case DFS:
+//            return finalPath;
+//        case AStar:
+//            return finalPath;
+//        case GreedySearch:
+//            return finalPath;
+
+
+        }
+
+        return finalPath;
+    }
 }
