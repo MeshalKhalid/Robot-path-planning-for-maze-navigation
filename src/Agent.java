@@ -42,16 +42,16 @@ public class Agent {
 		return matrix;
 
 	}
-	
-	public ArrayList<int[]> findPath(boolean[][] matrix) {
+
+	public ArrayList<Node> findPath(boolean[][] matrix) {
 		int Height = this.environment.getHeight();
 		int Width = this.environment.getWidth();
-		Maze maze = new Maze(this.initialLocationCoordinates, this.targetLocationCoordinates,matrix,Height,Width);
+		Maze maze = new Maze(this.initialLocationCoordinates, this.targetLocationCoordinates, matrix, Height, Width);
 		return searchUnit.breadthFirstSearch(maze);
 	}
-	
-	
-	public void printDetails(int Height ,int Width) {
+
+
+	public void printDetails(int Height, int Width) {
 		String MazeDetails = "Maze Height:  " + Height + "	Maze Width:  " + +Width;
 		System.out.println("* ".repeat(MazeDetails.length()));
 		System.out.println();
