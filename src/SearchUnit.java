@@ -99,6 +99,10 @@ public class SearchUnit {
     public ArrayList<Node> getFinalPath(ArrayList<Node> path, Agent.Strategies strategy) {
         ArrayList<Node> finalPath = new ArrayList<>();
 
+        if (path.size() == 1)
+            return path;
+
+
         switch (strategy) {
             case BFS:
                 Node parent = path.get(path.size() - 1);
