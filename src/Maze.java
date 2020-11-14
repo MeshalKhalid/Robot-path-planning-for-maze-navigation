@@ -47,7 +47,8 @@ public class Maze {
 //	}
 
     public int[] result(int[] oldState, Actions action, boolean[][] matrix) {
-
+        int height = this.getHeight() - 1;
+        int width = this.getWidth() - 1;
         int y = oldState[0];
         int x = oldState[1];
         int[] state = new int[2];
@@ -55,7 +56,7 @@ public class Maze {
 
         switch (action) {
             case Up:
-                if (matrix[y + 1][x]) {
+                if ((y + 1 <= height) && matrix[y + 1][x]) {
                     state[0] += 1;
 
                 }
@@ -71,7 +72,7 @@ public class Maze {
                 return state;
 
             case Right:
-                if (matrix[y][x + 1]) {
+                if ((x + 1 <= width) && matrix[y][x + 1]) {
                     state[1] += 1;
                 }
 
@@ -86,40 +87,40 @@ public class Maze {
 
 
             case UpLeft:
-				if ((x - 1 >= 0)  && (y + 1 >= 0) && matrix[y+1][x - 1]) {
-					state[1] -= 1;
-					state[0] += 1;
+                if ((x - 1 >= 0) && (y + 1 <= height) && (matrix[y + 1][x] && matrix[y][x - 1]) && matrix[y + 1][x - 1]) {
+                    state[1] -= 1;
+                    state[0] += 1;
 
-				}
+                }
 
-				return state;
+                return state;
             case UpRight:
 
-				if ((x + 1 >= 0)  && (y + 1 >= 0) && matrix[y+1][x + 1]) {
-					state[1] += 1;
-					state[0] += 1;
-				}
-
-
-				return state;
-            case DownLeft:
-
-				if ((x - 1 >= 0)  && (y - 1 >= 0) && matrix[y-1][x - 1]) {
-					state[1] -= 1;
-					state[0] -= 1;
+                if ((x + 1 <= width) && (y + 1 <= height) && (matrix[y + 1][x] && matrix[y][x + 1]) && matrix[y + 1][x + 1]) {
+                    state[1] += 1;
+                    state[0] += 1;
                 }
 
 
-				return state;
-			case DownRight:
+                return state;
+            case DownLeft:
 
-				if ((x + 1 >= 0)  && (y - 1 >= 0) && matrix[y-1][x + 1]) {
-					state[1] += 1;
-					state[0] -= 1;
-				}
+                if ((x - 1 >= 0) && (y - 1 >= 0) && (matrix[y - 1][x] && matrix[y][x - 1]) && matrix[y - 1][x - 1]) {
+                    state[1] -= 1;
+                    state[0] -= 1;
+                }
 
 
-				return state;
+                return state;
+            case DownRight:
+
+                if ((x + 1 <= width) && (y - 1 >= 0) && (matrix[y - 1][x] && matrix[y][x + 1]) && matrix[y - 1][x + 1]) {
+                    state[1] += 1;
+                    state[0] -= 1;
+                }
+
+
+                return state;
 
 
             default:
