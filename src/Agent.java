@@ -47,7 +47,18 @@ public class Agent {
 		int Height = this.environment.getHeight();
 		int Width = this.environment.getWidth();
 		Maze maze = new Maze(this.initialLocationCoordinates, this.targetLocationCoordinates, matrix, Height, Width);
-		return searchUnit.getFinalPath(searchUnit.breadthFirstSearch(maze), this.strategy);
+
+		switch (this.strategy) {
+			case BFS:
+				return searchUnit.getFinalPath(searchUnit.breadthFirstSearch(maze));
+
+			case DFS:
+				return searchUnit.getFinalPath(searchUnit.depthFirstSearch(maze));
+			default:
+				throw new Error("option not found");
+		}
+
+
 	}
 
 
