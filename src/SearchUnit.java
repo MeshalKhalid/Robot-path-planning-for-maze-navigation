@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /*
  1. Breadth first search (BFS)
@@ -79,7 +80,56 @@ public class SearchUnit {
         return false;
     }
 
-    public void depthFirstSearch(Maze problem) {
+    public ArrayList<Node> depthFirstSearch(Maze problem) {
+
+
+        Node node = new Node(problem.getInitialLocationCoordinates(), 0);
+
+        ArrayList<Node> solution = new ArrayList<Node>();
+        Stack<Node> frontier = new Stack<Node>();
+
+        boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
+
+        explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
+
+        if (problem.goalTest(node.getState())) {
+            solution.add(node);
+            return solution;
+        }
+
+        frontier.add(node);
+
+
+        while (true) {
+
+            if (frontier.isEmpty()) {
+                throw new Error("no solution found");
+            }
+
+            node = frontier.pop();
+//            System.out.println(node.getState()[0]+" "+ node.getState()[1]);
+
+            for (Maze.Actions action : Maze.Actions.values()) {
+
+                int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
+                int[] state = problem.result(nodeCoordinates, action, problem.matrix);
+
+
+                if (!explored[state[0]][state[1]]) {
+                    solution.add(node);
+                    explored[state[0]][state[1]] = true;
+
+                    if (problem.goalTest(state)) {
+
+                        return solution;
+                    } else {
+                        System.out.println(state[0] + " " + state[1]);
+                        frontier.push(new Node(state, 0, node));
+                    }
+                }
+
+            }
+        }
 
     }
 
@@ -96,32 +146,36 @@ public class SearchUnit {
     }
 
 
-    public ArrayList<Node> getFinalPath(ArrayList<Node> path, Agent.Strategies strategy) {
+    public ArrayList<Node> getFinalPath(ArrayList<Node> path) {
         ArrayList<Node> finalPath = new ArrayList<>();
-
         if (path.size() == 1)
             return path;
 
-
-        switch (strategy) {
-            case BFS:
-                Node parent = path.get(path.size() - 1);
-
-                while (parent.getParent() != null) {
-                    parent = parent.getParent();
-                    finalPath.add(parent);
-                }
-                break;
-
-            //        case DFS:
-//            return finalPath;
-//        case AStar:
-//            return finalPath;
-//        case GreedySearch:
-//            return finalPath;
-
-
+        Node parent = path.get(path.size() - 1);
+        while (parent.getParent() != null) {
+            parent = parent.getParent();
+            finalPath.add(parent);
         }
+
+//        switch (strategy) {
+//            case BFS:
+//                Node parent = path.get(path.size() - 1);
+//
+//                while (parent.getParent() != null) {
+//                    parent = parent.getParent();
+//                    finalPath.add(parent);
+//                }
+//                break;
+//
+//            //        case DFS:
+////            return finalPath;
+////        case AStar:
+////            return finalPath;
+////        case GreedySearch:
+////            return finalPath;
+//
+//
+//        }
 
         return finalPath;
     }
