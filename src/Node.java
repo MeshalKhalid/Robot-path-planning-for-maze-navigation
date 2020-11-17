@@ -3,16 +3,16 @@ public class Node {
 
 	private int[] state;
 	private Node parent;
-	private int pathCost;
+	private double pathCost;
 
-	public Node(int[] state, int pathCost) {
+	public Node(int[] state, double pathCost) {
 		super();
 		this.state = state;
 		this.pathCost = pathCost;
 		this.parent = null;
 	}
 
-	public Node(int[] state, int pathCost, Node parent) {
+	public Node(int[] state, double pathCost, Node parent) {
 		super();
 		this.state = state;
 		this.pathCost = pathCost;
@@ -32,7 +32,7 @@ public class Node {
 		this.state = state;
 	}
 
-	public int getPathCost() {
+	public double getPathCost() {
 		return pathCost;
 	}
 
