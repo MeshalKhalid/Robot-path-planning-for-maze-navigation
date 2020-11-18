@@ -1,26 +1,10 @@
 import java.util.*;
 
-/*
- 1. Breadth first search (BFS)
-2. Depth first search (DFS)
-3. Greedy Best-first search (use separately Manhattan distance and Euclidean distance
-as heuristics)
 
-4. A* (use separately Manhattan distance and Euclidean distance as heuristics)*/
-
-/*
-
-display :
-path cost
-number of nodes expanded
-maximum tree depth searched
-maximum size of the frontier.
- */
-
-class NodeComparator implements Comparator<Node> { // this class use to sort the process in term of size;
+class NodeComparator implements Comparator<Node> { // used to sort nodes based on path cost;
 
     public int compare(Node n1, Node n2) {
-        if (n1.getPathCost() < n1.getPathCost())
+        if (n1.getPathCost() < n2.getPathCost())
             return -1;
         else if (n1.getPathCost() > n2.getPathCost())
             return 1;
@@ -32,24 +16,31 @@ class NodeComparator implements Comparator<Node> { // this class use to sort the
 
 public class SearchUnit {
 
+    static int pathCost = 0;
+    static int nodesExpanded = 0;
+    static int frontierMaximumSize = 0;
+
+
     public ArrayList<Node> breadthFirstSearch(Maze problem) {
 
 
         Node node = new Node(problem.getInitialLocationCoordinates(), 0);
 
-        ArrayList<Node> solution = new ArrayList<Node>();
-        Queue<Node> frontier = new LinkedList<Node>();
+        ArrayList<Node> solution = new ArrayList<>();
+        Queue<Node> frontier = new LinkedList<>();
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
         explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
 
         if (problem.goalTest(node.getState())) {
             solution.add(node);
+            printDetails(solution);
+
             return solution;
         }
 
         frontier.add(node);
-
+        getFrontierMaximumSize(frontier.size());
 
         while (true) {
 
@@ -58,7 +49,7 @@ public class SearchUnit {
             }
 
             node = frontier.poll();
-
+            nodesExpanded++;
             for (Maze.Actions action : Maze.Actions.values()) {
 
                 int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
@@ -70,9 +61,11 @@ public class SearchUnit {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
+                        printDetails(solution);
                         return solution;
                     } else {
                         frontier.add(new Node(state, 0, node));
+                        getFrontierMaximumSize(frontier.size());
                     }
                 }
 
@@ -82,21 +75,14 @@ public class SearchUnit {
 
     }
 
-    public boolean isInFrontier(Queue<Node> frontier, Node child) {
-        for (Node node : frontier) {
-            if (node.getState()[0] == child.getState()[0] && node.getState()[0] == child.getState()[0])
-                return true;
-        }
-        return false;
-    }
 
     public ArrayList<Node> depthFirstSearch(Maze problem) {
 
 
         Node node = new Node(problem.getInitialLocationCoordinates(), 0);
 
-        ArrayList<Node> solution = new ArrayList<Node>();
-        Stack<Node> frontier = new Stack<Node>();
+        ArrayList<Node> solution = new ArrayList<>();
+        Stack<Node> frontier = new Stack<>();
 
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
@@ -104,11 +90,13 @@ public class SearchUnit {
 
         if (problem.goalTest(node.getState())) {
             solution.add(node);
+            printDetails(solution);
+
             return solution;
         }
 
         frontier.add(node);
-
+        getFrontierMaximumSize(frontier.size());
 
         while (true) {
 
@@ -117,7 +105,7 @@ public class SearchUnit {
             }
 
             node = frontier.pop();
-//            System.out.println(node.getState()[0]+" "+ node.getState()[1]);
+            nodesExpanded++;
 
             for (Maze.Actions action : Maze.Actions.values()) {
 
@@ -130,10 +118,12 @@ public class SearchUnit {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
+                        printDetails(solution);
 
                         return solution;
                     } else {
                         frontier.push(new Node(state, 0, node));
+                        getFrontierMaximumSize(frontier.size());
                     }
                 }
 
@@ -153,20 +143,22 @@ public class SearchUnit {
 
         Node node = new Node(problem.getInitialLocationCoordinates(), pathCost);
 
-        ArrayList<Node> solution = new ArrayList<Node>();
+        ArrayList<Node> solution = new ArrayList<>();
         Comparator<Node> comparator = new NodeComparator();
-        PriorityQueue<Node> frontier = new PriorityQueue<Node>(1, comparator);
+        PriorityQueue<Node> frontier = new PriorityQueue<>(1, comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
         explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
 
         if (problem.goalTest(node.getState())) {
             solution.add(node);
+
+            printDetails(solution);
             return solution;
         }
 
         frontier.add(node);
-
+        getFrontierMaximumSize(frontier.size());
 
         while (true) {
 
@@ -175,6 +167,7 @@ public class SearchUnit {
             }
 
             node = frontier.poll();
+            nodesExpanded++;
 
             for (Maze.Actions action : Maze.Actions.values()) {
 
@@ -187,6 +180,7 @@ public class SearchUnit {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
+                        printDetails(solution);
                         return solution;
                     } else {
                         double cost = getHeuristic(
@@ -195,6 +189,7 @@ public class SearchUnit {
                                 node.getState(),
                                 isManhattan ? Agent.Strategies.GreedySearchManhattan : Agent.Strategies.GreedySearchEuclidean);
                         frontier.add(new Node(state, cost, node));
+                        getFrontierMaximumSize(frontier.size());
                     }
                 }
 
@@ -214,9 +209,9 @@ public class SearchUnit {
 
         Node node = new Node(problem.getInitialLocationCoordinates(), pathCost);
 
-        ArrayList<Node> solution = new ArrayList<Node>();
+        ArrayList<Node> solution = new ArrayList<>();
         Comparator<Node> comparator = new NodeComparator();
-        PriorityQueue<Node> frontier = new PriorityQueue<Node>(1, comparator);
+        PriorityQueue<Node> frontier = new PriorityQueue<>(1, comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
         explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
@@ -227,7 +222,7 @@ public class SearchUnit {
         }
 
         frontier.add(node);
-
+        getFrontierMaximumSize(frontier.size());
 
         while (true) {
 
@@ -236,6 +231,7 @@ public class SearchUnit {
             }
 
             node = frontier.poll();
+            nodesExpanded++;
 
             for (Maze.Actions action : Maze.Actions.values()) {
 
@@ -255,8 +251,8 @@ public class SearchUnit {
                                 problem.getTargetLocationCoordinates(),
                                 node.getState(),
                                 isManhattan ? Agent.Strategies.AStarManhattan : Agent.Strategies.AStarEuclidean);
-
                         frontier.add(new Node(state, cost, node));
+                        getFrontierMaximumSize(frontier.size());
                     }
                 }
 
@@ -307,26 +303,27 @@ public class SearchUnit {
             finalPath.add(parent);
         }
 
-//        switch (strategy) {
-//            case BFS:
-//                Node parent = path.get(path.size() - 1);
-//
-//                while (parent.getParent() != null) {
-//                    parent = parent.getParent();
-//                    finalPath.add(parent);
-//                }
-//                break;
-//
-//            //        case DFS:
-////            return finalPath;
-////        case AStar:
-////            return finalPath;
-////        case GreedySearch:
-////            return finalPath;
-//
-//
-//        }
-
         return finalPath;
     }
+
+    public void getFrontierMaximumSize(int size) {
+        if (size > frontierMaximumSize)
+            frontierMaximumSize = size;
+    }
+
+
+    public void printDetails(ArrayList<Node> solution) {
+
+        for (Node node : getFinalPath(solution)) {
+            pathCost += node.getPathCost();
+        }
+        System.out.print(
+                "path Cost: " + pathCost + "\n" +
+                        "nodes Expanded: " + nodesExpanded + "\n" +
+                        "maximum Depth: " + getFinalPath(solution).size() + "\n" +
+                        "frontier Maximum Size: " + frontierMaximumSize + "\n"
+        );
+    }
+
+
 }
