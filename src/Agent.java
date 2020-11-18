@@ -86,4 +86,7 @@ public class Agent {
 
     }
 
+    public enum Actions { // A description of the possible actions available to the agent.
+        Up, Down, Right, Left, UpLeft, UpRight, DownLeft, DownRight
+    }
 }

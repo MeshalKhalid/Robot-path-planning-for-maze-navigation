@@ -8,10 +8,6 @@ public class Maze {
     private int Height;
     private int Width;
 
-    public enum Actions { // A description of the possible actions available to the agent.
-        Up, Down, Right, Left, UpLeft, UpRight, DownLeft, DownRight
-    }
-
     public Maze(int[] initialLocationCoordinates, int[] targetLocationCoordinates, boolean[][] matrix, int Height,
                 int Width) {
         super();
@@ -46,7 +42,7 @@ public class Maze {
 //		return this.path.size();
 //	}
 
-    public int[] result(int[] oldState, Actions action, boolean[][] matrix) {
+    public int[] result(int[] oldState, Agent.Actions action, boolean[][] matrix) {
         int height = this.getHeight() - 1;
         int width = this.getWidth() - 1;
         int y = oldState[0];

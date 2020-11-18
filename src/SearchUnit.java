@@ -50,7 +50,7 @@ public class SearchUnit {
 
             node = frontier.poll();
             nodesExpanded++;
-            for (Maze.Actions action : Maze.Actions.values()) {
+            for (Agent.Actions action : Agent.Actions.values()) {
 
                 int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
                 int[] state = problem.result(nodeCoordinates, action, problem.matrix);
@@ -107,7 +107,7 @@ public class SearchUnit {
             node = frontier.pop();
             nodesExpanded++;
 
-            for (Maze.Actions action : Maze.Actions.values()) {
+            for (Agent.Actions action : Agent.Actions.values()) {
 
                 int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
                 int[] state = problem.result(nodeCoordinates, action, problem.matrix);
@@ -169,7 +169,7 @@ public class SearchUnit {
             node = frontier.poll();
             nodesExpanded++;
 
-            for (Maze.Actions action : Maze.Actions.values()) {
+            for (Agent.Actions action : Agent.Actions.values()) {
 
                 int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
                 int[] state = problem.result(nodeCoordinates, action, problem.matrix);
@@ -233,7 +233,7 @@ public class SearchUnit {
             node = frontier.poll();
             nodesExpanded++;
 
-            for (Maze.Actions action : Maze.Actions.values()) {
+            for (Agent.Actions action : Agent.Actions.values()) {
 
                 int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
                 int[] state = problem.result(nodeCoordinates, action, problem.matrix);
