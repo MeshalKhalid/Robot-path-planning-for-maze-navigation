@@ -10,9 +10,9 @@ public class Agent {
     private BufferedImage environment;
     private Strategies strategy;
 
-    static public enum Strategies {
-        BFS, DFS, GreedySearchManhattan, GreedySearchEuclidean, AStarManhattan, AStarEuclidean
-    }
+     public enum Strategies {
+         BFS, DFS, GreedySearchManhattan, GreedySearchEuclidean, AStarManhattan, AStarEuclidean
+     }
 
     public Agent(int[] initialLocationCoordinates, int[] targetLocationCoordinates, BufferedImage environment, Strategies strategy) {
         super();
@@ -84,39 +84,6 @@ public class Agent {
         System.out.println();
         System.out.println("* ".repeat(MazeDetails.length()));
 
-    }
-
-
-    public int[] getInitialLocationCoordinates() {
-        return initialLocationCoordinates;
-    }
-
-    public void setInitialLocationCoordinates(int[] initialLocationCoordinates) {
-        this.initialLocationCoordinates = initialLocationCoordinates;
-    }
-
-    public int[] getTargetLocationCoordinates() {
-        return targetLocationCoordinates;
-    }
-
-    public void setTargetLocationCoordinates(int[] targetLocationCoordinates) {
-        this.targetLocationCoordinates = targetLocationCoordinates;
-    }
-
-    public BufferedImage getEnvironment() {
-        return environment;
-    }
-
-    public void setEnvironment(BufferedImage environment) {
-        this.environment = environment;
-    }
-
-    public Strategies getStrategy() {
-        return strategy;
-    }
-
-    public void setStrategy(Strategies strategy) {
-        this.strategy = this.strategy;
     }
 
 }
