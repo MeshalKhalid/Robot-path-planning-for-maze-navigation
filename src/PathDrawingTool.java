@@ -23,7 +23,7 @@ public class PathDrawingTool {
             int[] initialLocationCoordinates = {0, 40};
             int[] targetLocationCoordinates = {420, 850};
             Agent agent = new Agent(initialLocationCoordinates, targetLocationCoordinates, image, Agent.Strategies.AStarManhattan);
-            ArrayList<Node> solution = agent.findPath(agent.perceptsEnvironment());
+            ArrayList<Node> solution = agent.findPath();
             drawPath(solution, image);
 
             File file = new File("output.png");
