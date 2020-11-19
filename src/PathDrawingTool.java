@@ -5,24 +5,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class Main {
+public class PathDrawingTool {
+
+    public static void drawPath(ArrayList<Node> solution, BufferedImage image) {
+        Color red = new Color(255, 0, 0);
+
+        for (Node node : solution) {
+            image.setRGB(node.getState()[1], node.getState()[0], red.getRGB());
+
+        }
+    }
 
     public static void main(String[] args) {
         try {
-            Color red = new Color(255, 0, 0);
 
             BufferedImage image = ImageIO.read(new File("src/smallMaze.jpg"));
             int[] initialLocationCoordinates = {0, 40};
-            int[] targetLocationCoordinates = {400, 820};
-            Agent agent = new Agent(initialLocationCoordinates, targetLocationCoordinates, image, Agent.Strategies.BFS);
+            int[] targetLocationCoordinates = {420, 850};
+            Agent agent = new Agent(initialLocationCoordinates, targetLocationCoordinates, image, Agent.Strategies.AStarManhattan);
             ArrayList<Node> solution = agent.findPath(agent.perceptsEnvironment());
+            drawPath(solution, image);
 
-            for (Node node : solution) {
-                image.setRGB(node.getState()[1], node.getState()[0], red.getRGB());
-
-            }
-
-            File file = new File("image.png");
+            File file = new File("output.png");
             ImageIO.write(image, "png", file);
 
         } catch (IOException e) {
