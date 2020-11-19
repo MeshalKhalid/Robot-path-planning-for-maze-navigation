@@ -10,9 +10,13 @@ public class Agent {
     private BufferedImage environment;
     private Strategies strategy;
 
-     public enum Strategies {
-         BFS, DFS, GreedySearchManhattan, GreedySearchEuclidean, AStarManhattan, AStarEuclidean
-     }
+    public enum Actions { // A description of the possible actions available to the agent.
+        Up, Down, Right, Left, UpLeft, UpRight, DownLeft, DownRight
+    }
+
+    public enum Strategies {
+        BFS, DFS, GreedySearchManhattan, GreedySearchEuclidean, AStarManhattan, AStarEuclidean
+    }
 
     public Agent(int[] initialLocationCoordinates, int[] targetLocationCoordinates, BufferedImage environment, Strategies strategy) {
         super();
@@ -24,7 +28,7 @@ public class Agent {
 
     }
 
-    public boolean[][] perceptsEnvironment() {
+    private boolean[][] perceptsEnvironment() {
         System.out.println("analyzing the maze...\n\n\n");
         int Height = this.environment.getHeight();
         int Width = this.environment.getWidth();
@@ -43,10 +47,10 @@ public class Agent {
 
     }
 
-    public ArrayList<Node> findPath(boolean[][] matrix) {
+    public ArrayList<Node> findPath() {
         int Height = this.environment.getHeight();
         int Width = this.environment.getWidth();
-        Maze maze = new Maze(this.initialLocationCoordinates, this.targetLocationCoordinates, matrix, Height, Width);
+        Maze maze = new Maze(this.initialLocationCoordinates, this.targetLocationCoordinates, perceptsEnvironment(), Height, Width);
 
         switch (this.strategy) {
             case BFS:
@@ -75,7 +79,7 @@ public class Agent {
     }
 
 
-    public void printDetails(int Height, int Width) {
+    private void printDetails(int Height, int Width) {
         String MazeDetails = "Maze Height:  " + Height + "	Maze Width:  " + +Width;
         System.out.println("* ".repeat(MazeDetails.length()));
         System.out.println();
@@ -86,7 +90,5 @@ public class Agent {
 
     }
 
-    public enum Actions { // A description of the possible actions available to the agent.
-        Up, Down, Right, Left, UpLeft, UpRight, DownLeft, DownRight
-    }
+
 }
