@@ -34,7 +34,7 @@ public class SearchUnit {
 
         if (problem.goalTest(node.getState())) {
             solution.add(node);
-            printDetails(solution);
+
 
             return solution;
         }
@@ -61,7 +61,7 @@ public class SearchUnit {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
-                        printDetails(solution);
+
                         return solution;
                     } else {
                         frontier.add(new Node(state, 0, node));
@@ -90,7 +90,7 @@ public class SearchUnit {
 
         if (problem.goalTest(node.getState())) {
             solution.add(node);
-            printDetails(solution);
+
 
             return solution;
         }
@@ -118,7 +118,7 @@ public class SearchUnit {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
-                        printDetails(solution);
+
 
                         return solution;
                     } else {
@@ -153,7 +153,7 @@ public class SearchUnit {
         if (problem.goalTest(node.getState())) {
             solution.add(node);
 
-            printDetails(solution);
+
             return solution;
         }
 
@@ -180,7 +180,6 @@ public class SearchUnit {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
-                        printDetails(solution);
                         return solution;
                     } else {
                         double cost = getHeuristic(
@@ -218,7 +217,7 @@ public class SearchUnit {
 
         if (problem.goalTest(node.getState())) {
             solution.add(node);
-            printDetails(solution);
+
             return solution;
         }
 
@@ -245,7 +244,7 @@ public class SearchUnit {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
-                        printDetails(solution);
+
                         return solution;
                     } else {
                         double cost = getHeuristic(
@@ -296,6 +295,7 @@ public class SearchUnit {
 
     public ArrayList<Node> getFinalPath(ArrayList<Node> path) {
         ArrayList<Node> finalPath = new ArrayList<>();
+
         if (path.size() == 1)
             return path;
 
@@ -304,6 +304,7 @@ public class SearchUnit {
             parent = parent.getParent();
             finalPath.add(parent);
         }
+        printDetails(finalPath);
 
         return finalPath;
     }
@@ -316,13 +317,13 @@ public class SearchUnit {
 
     public void printDetails(ArrayList<Node> solution) {
 
-        for (Node node : getFinalPath(solution)) {
+        for (Node node : solution) {
             pathCost += node.getPathCost();
         }
         System.out.print(
                 "path Cost: " + pathCost + "\n" +
                         "nodes Expanded: " + nodesExpanded + "\n" +
-                        "maximum Depth: " + getFinalPath(solution).size() + "\n" +
+                        "maximum Depth: " + solution.size() + "\n" +
                         "frontier Maximum Size: " + frontierMaximumSize + "\n"
         );
     }
