@@ -26,17 +26,17 @@ public class SearchUnit {
 
         Node node = new Node(problem.getInitialLocationCoordinates(), 0);
 
-        ArrayList<Node> solution = new ArrayList<>();
+        ArrayList<Node> algorithmPath = new ArrayList<>();
         Queue<Node> frontier = new LinkedList<>();
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
         explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
 
         if (problem.goalTest(node.getState())) {
-            solution.add(node);
+            algorithmPath.add(node);
 
 
-            return solution;
+            return algorithmPath;
         }
 
         frontier.add(node);
@@ -45,7 +45,7 @@ public class SearchUnit {
         while (true) {
 
             if (frontier.isEmpty()) {
-                throw new Error("no solution found");
+                throw new Error("no algorithmPath found");
             }
 
             node = frontier.poll();
@@ -54,7 +54,7 @@ public class SearchUnit {
 
                 int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
                 int[] state = problem.result(nodeCoordinates, action, problem.matrix);
-                solution.add(node);
+                algorithmPath.add(node);
 
 
                 if (!explored[state[0]][state[1]]) {
@@ -62,7 +62,7 @@ public class SearchUnit {
 
                     if (problem.goalTest(state)) {
 
-                        return solution;
+                        return algorithmPath;
                     } else {
                         frontier.add(new Node(state, 0, node));
                         getFrontierMaximumSize(frontier.size());
@@ -81,7 +81,7 @@ public class SearchUnit {
 
         Node node = new Node(problem.getInitialLocationCoordinates(), 0);
 
-        ArrayList<Node> solution = new ArrayList<>();
+        ArrayList<Node> algorithmPath = new ArrayList<>();
         Stack<Node> frontier = new Stack<>();
 
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
@@ -89,10 +89,10 @@ public class SearchUnit {
         explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
 
         if (problem.goalTest(node.getState())) {
-            solution.add(node);
+            algorithmPath.add(node);
 
 
-            return solution;
+            return algorithmPath;
         }
 
         frontier.add(node);
@@ -114,13 +114,13 @@ public class SearchUnit {
 
 
                 if (!explored[state[0]][state[1]]) {
-                    solution.add(node);
+                    algorithmPath.add(node);
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
 
 
-                        return solution;
+                        return algorithmPath;
                     } else {
                         frontier.push(new Node(state, 0, node));
                         getFrontierMaximumSize(frontier.size());
@@ -143,7 +143,7 @@ public class SearchUnit {
 
         Node node = new Node(problem.getInitialLocationCoordinates(), pathCost);
 
-        ArrayList<Node> solution = new ArrayList<>();
+        ArrayList<Node> algorithmPath = new ArrayList<>();
         Comparator<Node> comparator = new NodeComparator();
         PriorityQueue<Node> frontier = new PriorityQueue<>(1, comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
@@ -151,10 +151,10 @@ public class SearchUnit {
         explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
 
         if (problem.goalTest(node.getState())) {
-            solution.add(node);
+            algorithmPath.add(node);
 
 
-            return solution;
+            return algorithmPath;
         }
 
         frontier.add(node);
@@ -173,14 +173,14 @@ public class SearchUnit {
 
                 int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
                 int[] state = problem.result(nodeCoordinates, action, problem.matrix);
-                solution.add(node);
+                algorithmPath.add(node);
 
 
                 if (!explored[state[0]][state[1]]) {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
-                        return solution;
+                        return algorithmPath;
                     } else {
                         double cost = getHeuristic(
                                 problem.getInitialLocationCoordinates(),
@@ -208,7 +208,7 @@ public class SearchUnit {
 
         Node node = new Node(problem.getInitialLocationCoordinates(), pathCost);
 
-        ArrayList<Node> solution = new ArrayList<>();
+        ArrayList<Node> algorithmPath = new ArrayList<>();
         Comparator<Node> comparator = new NodeComparator();
         PriorityQueue<Node> frontier = new PriorityQueue<>(comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
@@ -216,9 +216,9 @@ public class SearchUnit {
         explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
 
         if (problem.goalTest(node.getState())) {
-            solution.add(node);
+            algorithmPath.add(node);
 
-            return solution;
+            return algorithmPath;
         }
 
         frontier.add(node);
@@ -237,7 +237,7 @@ public class SearchUnit {
 
                 int[] nodeCoordinates = {node.getState()[0], node.getState()[1]};
                 int[] state = problem.result(nodeCoordinates, action, problem.matrix);
-                solution.add(node);
+                algorithmPath.add(node);
 
 
                 if (!explored[state[0]][state[1]]) {
@@ -245,7 +245,7 @@ public class SearchUnit {
 
                     if (problem.goalTest(state)) {
 
-                        return solution;
+                        return algorithmPath;
                     } else {
                         double cost = getHeuristic(
                                 problem.getInitialLocationCoordinates(),
