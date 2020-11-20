@@ -272,10 +272,10 @@ public class SearchUnit {
                 return getEuclideanDistance(currentPoint, targetPoint);
 
             case AStarManhattan:
-                return getManhattanDistance(initialPoint, targetPoint) + getManhattanDistance(currentPoint, targetPoint);
+                return getManhattanDistance(initialPoint, currentPoint) + getManhattanDistance(currentPoint, targetPoint);
 
             case AStarEuclidean:
-                return getEuclideanDistance(initialPoint, targetPoint) + getEuclideanDistance(currentPoint, targetPoint);
+                return getEuclideanDistance(initialPoint, currentPoint) + getEuclideanDistance(currentPoint, targetPoint);
 
             default:
                 throw new Error("Unknown option");
