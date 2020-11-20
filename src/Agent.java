@@ -51,31 +51,64 @@ public class Agent {
         int Height = this.environment.getHeight();
         int Width = this.environment.getWidth();
         Maze maze = new Maze(this.initialLocationCoordinates, this.targetLocationCoordinates, perceptsEnvironment(), Height, Width);
-
+        long start = 0;
+        long end = 0;
         switch (this.strategy) {
             case BFS:
-                return searchUnit.getFinalPath(searchUnit.breadthFirstSearch(maze));
+                start = System.nanoTime();
+
+                ArrayList<Node> path = searchUnit.breadthFirstSearch(maze);
+
+                end = System.nanoTime();
+                printTime(start, end);
+
+                return searchUnit.getFinalPath(path);
 
             case DFS:
-                return searchUnit.getFinalPath(searchUnit.depthFirstSearch(maze));
+                start = System.nanoTime();
+
+                ArrayList<Node> path1 = searchUnit.depthFirstSearch(maze);
+                end = System.nanoTime();
+                printTime(start, end);
+                return searchUnit.getFinalPath(path1);
 
             case GreedySearchManhattan:
-                return searchUnit.getFinalPath(searchUnit.greedyBestFirstSearch(maze, true));
+                start = System.nanoTime();
+                ArrayList<Node> path2 = searchUnit.greedyBestFirstSearch(maze, true);
+                end = System.nanoTime();
+                printTime(start, end);
+                return searchUnit.getFinalPath(path2);
 
             case GreedySearchEuclidean:
-                return searchUnit.getFinalPath(searchUnit.greedyBestFirstSearch(maze, false));
+                start = System.nanoTime();
+                ArrayList<Node> path3 = searchUnit.greedyBestFirstSearch(maze, false);
+                end = System.nanoTime();
+                printTime(start, end);
+                return searchUnit.getFinalPath(path3);
 
             case AStarManhattan:
-                return searchUnit.getFinalPath(searchUnit.aStarSearch(maze, true));
+                start = System.nanoTime();
+                ArrayList<Node> path4 = searchUnit.aStarSearch(maze, true);
+                end = System.nanoTime();
+                printTime(start, end);
+                return searchUnit.getFinalPath(path4);
 
             case AStarEuclidean:
-                return searchUnit.getFinalPath(searchUnit.aStarSearch(maze, false));
+                start = System.nanoTime();
+                ArrayList<Node> path5 = searchUnit.aStarSearch(maze, false);
+                end = System.nanoTime();
+                printTime(start, end);
+                return searchUnit.getFinalPath(path5);
 
             default:
                 throw new Error("option not found");
         }
 
 
+    }
+
+    private void printTime(long start, long end) {
+        System.out.println((end - start) + " nanoseconds");
     }
 
 
