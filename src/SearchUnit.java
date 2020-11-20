@@ -45,7 +45,7 @@ public class SearchUnit {
         while (true) {
 
             if (frontier.isEmpty()) {
-                throw new Error("no algorithmPath found");
+                throw new Error("no solution found");
             }
 
             node = frontier.poll();
