@@ -296,8 +296,10 @@ public class SearchUnit {
     public ArrayList<Node> getFinalPath(ArrayList<Node> path) {
         ArrayList<Node> finalPath = new ArrayList<>();
 
-        if (path.size() == 1)
+        if (path.size() == 1) {
+            printDetails(finalPath);
             return path;
+        }
 
         Node parent = path.get(path.size() - 1);
         while (parent.getParent() != null) {
