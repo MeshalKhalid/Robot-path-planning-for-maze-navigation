@@ -218,6 +218,7 @@ public class SearchUnit {
 
         if (problem.goalTest(node.getState())) {
             solution.add(node);
+            printDetails(solution);
             return solution;
         }
 
@@ -244,6 +245,7 @@ public class SearchUnit {
                     explored[state[0]][state[1]] = true;
 
                     if (problem.goalTest(state)) {
+                        printDetails(solution);
                         return solution;
                     } else {
                         double cost = getHeuristic(
