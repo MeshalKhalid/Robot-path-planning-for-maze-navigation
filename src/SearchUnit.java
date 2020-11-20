@@ -4,9 +4,9 @@ import java.util.*;
 class NodeComparator implements Comparator<Node> { // used to sort nodes based on path cost;
 
     public int compare(Node n1, Node n2) {
-        if (n1.getPathCost() < n2.getPathCost())
+        if (n1.getHeuristicValue() < n2.getHeuristicValue())
             return -1;
-        else if (n1.getPathCost() > n2.getPathCost())
+        else if (n1.getHeuristicValue() > n2.getHeuristicValue())
             return 1;
         return 0;
     }
@@ -320,10 +320,10 @@ public class SearchUnit {
     public void printDetails(ArrayList<Node> solution) {
 
         for (Node node : solution) {
-            pathCost += node.getPathCost();
+            pathCost += node.getStepValue();
         }
         System.out.print(
-                "path Cost: " + pathCost + "\n" +
+                "path Cost: " + pathCost + " steps" + "\n" +
                         "nodes Expanded: " + nodesExpanded + "\n" +
                         "maximum Depth: " + solution.size() + "\n" +
                         "frontier Maximum Size: " + frontierMaximumSize + "\n"
