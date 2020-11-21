@@ -30,7 +30,8 @@ public class SearchUnit {
         Queue<Node> frontier = new LinkedList<>();
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
-        explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
+        explored[node.getState()[0]][node.getState()[1]] = true;
+
 
         if (problem.goalTest(node.getState())) {
             algorithmPath.add(node);
@@ -86,7 +87,8 @@ public class SearchUnit {
 
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
-        explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
+        explored[node.getState()[0]][node.getState()[1]] = true;
+
 
         if (problem.goalTest(node.getState())) {
             algorithmPath.add(node);
@@ -148,7 +150,8 @@ public class SearchUnit {
         PriorityQueue<Node> frontier = new PriorityQueue<>(comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
-        explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
+        explored[node.getState()[0]][node.getState()[1]] = true;
+
 
         if (problem.goalTest(node.getState())) {
             algorithmPath.add(node);
@@ -213,7 +216,8 @@ public class SearchUnit {
         PriorityQueue<Node> frontier = new PriorityQueue<>(comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
-        explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
+        explored[node.getState()[0]][node.getState()[1]] = true;
+
 
         if (problem.goalTest(node.getState())) {
             algorithmPath.add(node);
