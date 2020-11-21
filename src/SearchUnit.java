@@ -137,7 +137,7 @@ public class SearchUnit {
         double pathCost = getHeuristic(
                 problem.getInitialLocationCoordinates(),
                 problem.getTargetLocationCoordinates(),
-                problem.getTargetLocationCoordinates(),
+                problem.getInitialLocationCoordinates(),
                 isManhattan ? Agent.Strategies.GreedySearchManhattan : Agent.Strategies.GreedySearchEuclidean);
 
 
@@ -202,7 +202,7 @@ public class SearchUnit {
         double pathCost = getHeuristic(
                 problem.getInitialLocationCoordinates(),
                 problem.getTargetLocationCoordinates(),
-                problem.getTargetLocationCoordinates(),
+                problem.getInitialLocationCoordinates(),
                 isManhattan ? Agent.Strategies.AStarManhattan : Agent.Strategies.AStarEuclidean);
 
 
