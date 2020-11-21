@@ -136,16 +136,17 @@ public class SearchUnit {
 
 
     public ArrayList<Node> greedyBestFirstSearch(Maze problem, boolean isManhattan) {
+        ArrayList<Node> algorithmPath = new ArrayList<>();
+
         double pathCost = getHeuristic(
                 problem.getInitialLocationCoordinates(),
                 problem.getTargetLocationCoordinates(),
                 problem.getInitialLocationCoordinates(),
-                isManhattan ? Agent.Strategies.GreedySearchManhattan : Agent.Strategies.GreedySearchEuclidean);
+                isManhattan ? Agent.Strategies.GreedySearchManhattan : Agent.Strategies.GreedySearchEuclidean, algorithmPath);
 
 
         Node node = new Node(problem.getInitialLocationCoordinates(), pathCost);
 
-        ArrayList<Node> algorithmPath = new ArrayList<>();
         Comparator<Node> comparator = new NodeComparator();
         PriorityQueue<Node> frontier = new PriorityQueue<>(comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
@@ -188,8 +189,8 @@ public class SearchUnit {
                         double cost = getHeuristic(
                                 problem.getInitialLocationCoordinates(),
                                 problem.getTargetLocationCoordinates(),
-                                node.getState(),
-                                isManhattan ? Agent.Strategies.GreedySearchManhattan : Agent.Strategies.GreedySearchEuclidean);
+                                state,
+                                isManhattan ? Agent.Strategies.GreedySearchManhattan : Agent.Strategies.GreedySearchEuclidean, algorithmPath);
                         frontier.add(new Node(state, cost, node));
                         getFrontierMaximumSize(frontier.size());
                     }
@@ -202,16 +203,17 @@ public class SearchUnit {
     }
 
     public ArrayList<Node> aStarSearch(Maze problem, boolean isManhattan) {
+        ArrayList<Node> algorithmPath = new ArrayList<>();
+
         double pathCost = getHeuristic(
                 problem.getInitialLocationCoordinates(),
                 problem.getTargetLocationCoordinates(),
                 problem.getInitialLocationCoordinates(),
-                isManhattan ? Agent.Strategies.AStarManhattan : Agent.Strategies.AStarEuclidean);
+                isManhattan ? Agent.Strategies.AStarManhattan : Agent.Strategies.AStarEuclidean, algorithmPath);
 
 
         Node node = new Node(problem.getInitialLocationCoordinates(), pathCost);
 
-        ArrayList<Node> algorithmPath = new ArrayList<>();
         Comparator<Node> comparator = new NodeComparator();
         PriorityQueue<Node> frontier = new PriorityQueue<>(comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
@@ -254,8 +256,8 @@ public class SearchUnit {
                         double cost = getHeuristic(
                                 problem.getInitialLocationCoordinates(),
                                 problem.getTargetLocationCoordinates(),
-                                node.getState(),
-                                isManhattan ? Agent.Strategies.AStarManhattan : Agent.Strategies.AStarEuclidean);
+                                state,
+                                isManhattan ? Agent.Strategies.AStarManhattan : Agent.Strategies.AStarEuclidean, algorithmPath);
                         frontier.add(new Node(state, cost, node));
                         getFrontierMaximumSize(frontier.size());
                     }
@@ -267,7 +269,7 @@ public class SearchUnit {
     }
 
 
-    public double getHeuristic(int[] initialPoint, int[] targetPoint, int[] currentPoint, Agent.Strategies strategy) {
+    public double getHeuristic(int[] initialPoint, int[] targetPoint, int[] currentPoint, Agent.Strategies strategy, ArrayList<Node> path) {
 
         switch (strategy) {
             case GreedySearchManhattan:
@@ -277,10 +279,24 @@ public class SearchUnit {
                 return getEuclideanDistance(currentPoint, targetPoint);
 
             case AStarManhattan:
-                return getManhattanDistance(initialPoint, currentPoint) + getManhattanDistance(currentPoint, targetPoint);
+                if (path.size() == 0)
+                    return getManhattanDistance(initialPoint, currentPoint) + getManhattanDistance(currentPoint, targetPoint);
+                ArrayList<Node> list = getPath(path);
+                double cost = 0;
+                for (Node node : list) {
+                    cost += getManhattanDistance(initialPoint, node.getState()) + getManhattanDistance(node.getState(), targetPoint);
+                }
+                return cost;
 
             case AStarEuclidean:
-                return getEuclideanDistance(initialPoint, currentPoint) + getEuclideanDistance(currentPoint, targetPoint);
+                if (path.size() == 0)
+                    return getEuclideanDistance(initialPoint, currentPoint) + getEuclideanDistance(currentPoint, targetPoint);
+                ArrayList<Node> list2 = getPath(path);
+                double cost2 = 0;
+                for (Node node : list2) {
+                    cost2 += getEuclideanDistance(initialPoint, node.getState()) + getEuclideanDistance(node.getState(), targetPoint);
+                }
+                return cost2;
 
             default:
                 throw new Error("Unknown option");
@@ -296,6 +312,24 @@ public class SearchUnit {
     public double getEuclideanDistance(int[] firstPoint, int[] secondPoint) {
         return Math.sqrt(Math.pow((firstPoint[1] - firstPoint[0]), 2) + Math.pow((secondPoint[1] - secondPoint[0]), 2));
     }
+
+    public ArrayList<Node> getPath(ArrayList<Node> algorithmPath) {
+        ArrayList<Node> path = new ArrayList<>();
+
+        if (algorithmPath.size() == 1) {
+            return algorithmPath;
+        }
+
+        Node parent = algorithmPath.get(algorithmPath.size() - 1);
+        while (parent.getParent() != null) {
+            parent = parent.getParent();
+            path.add(parent);
+        }
+
+
+        return path;
+    }
+
 
     public ArrayList<Node> getFinalPath(ArrayList<Node> path) {
         ArrayList<Node> finalPath = new ArrayList<>();
