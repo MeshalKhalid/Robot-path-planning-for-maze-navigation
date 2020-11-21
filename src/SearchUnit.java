@@ -145,7 +145,7 @@ public class SearchUnit {
 
         ArrayList<Node> algorithmPath = new ArrayList<>();
         Comparator<Node> comparator = new NodeComparator();
-        PriorityQueue<Node> frontier = new PriorityQueue<>(1, comparator);
+        PriorityQueue<Node> frontier = new PriorityQueue<>(comparator);
         boolean[][] explored = new boolean[problem.getHeight()][problem.getWidth()];
 
         explored[problem.getInitialLocationCoordinates()[0]][problem.getInitialLocationCoordinates()[1]] = true;
