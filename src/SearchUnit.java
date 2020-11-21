@@ -290,7 +290,7 @@ public class SearchUnit {
     }
 
     public double getEuclideanDistance(int[] firstPoint, int[] secondPoint) {
-        return Math.sqrt(Math.pow((secondPoint[0] - firstPoint[0]), 2) + Math.pow((secondPoint[1] - firstPoint[1]), 2));
+        return Math.sqrt(Math.pow((firstPoint[1] - firstPoint[0]), 2) + Math.pow((secondPoint[1] - secondPoint[0]), 2));
     }
 
     public ArrayList<Node> getFinalPath(ArrayList<Node> path) {
