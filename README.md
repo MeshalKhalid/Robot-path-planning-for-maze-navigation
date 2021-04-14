@@ -1,7 +1,8 @@
-# Robot-path-planning-for-maze-navigation
+## Robot-path-planning-for-maze-navigation
 
+![](logo.png)
 
-# Introductioin
+# Introduction
 A java program that solves mazes, using these algorithms:  
 1- Best first search  
 2- Depth first search  
